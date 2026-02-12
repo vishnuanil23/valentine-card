@@ -362,7 +362,26 @@
 
         // Quiz logic
         function getName() {
-            return new URLSearchParams(window.location.search).get("name");
+            // First check query parameters (backward compatibility)
+            const params = new URLSearchParams(window.location.search);
+            if (params.has("name")) {
+                return params.get("name");
+            }
+
+            // Then check path
+            const path = window.location.pathname;
+            // Split by returns and filter out empty strings and common filenames
+            const segments = path.split('/').filter(s => s && s !== 'index.html');
+
+            if (segments.length > 0) {
+                const lastSegment = segments[segments.length - 1];
+                // Avoid treating the repository name as the user name if it's the only segment
+                // Adjust 'valentine-card' if your repo name is different
+                if (lastSegment !== "valentine-card") {
+                    return decodeURIComponent(lastSegment);
+                }
+            }
+            return null;
         }
         const valentineName = getName();
 

@@ -18,10 +18,10 @@ A dynamic, interactive, and beautifully animated digital Valentine's card.
 You can share this special card with your Valentine using the link below! Just add their name at the end of the URL.
 
 **Format:**
-`https://vishnuani123.github.io/valentine-card/?name=YOUR_VALENTINE_NAME`
+`https://valentine-mylove.netlify.app/YOUR_VALENTINE_NAME`
 
 **Example:**
-[https://vishnuani123.github.io/valentine-card/?name=Aswin](https://vishnuani123.github.io/valentine-card/?name=Aswin)
+[https://valentine-mylove.netlify.app/anu](https://valentine-mylove.netlify.app/anu)
 
 ## 🛠️ Customization
 
