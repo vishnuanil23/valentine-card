@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Valentine ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Sacramento&display=swap" rel="stylesheet">
+
+<meta property="og:title" content="A Special Valentine Surprise ❤️">
+<meta property="og:description" content="I made something special for you 💌 Open it!">
+<meta property="og:image" content="https://YOUR_USERNAME.github.io/valentine-card/preview.jpg">
+<meta property="og:type" content="website">
+
+<style>
+:root{
+--primary:#ff4d6d;
+--bg:linear-gradient(135deg,#fff0f3,#ffccd5);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Poppins',sans-serif;
+background:var(--bg);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+perspective:1000px;
+cursor:none;
+}
+
+/* Floating Background Hearts */
+.bg-hearts{
+position:fixed;
+width:100%;
+height:100%;
+top:0;left:0;
+pointer-events:none;
+overflow:hidden;
+z-index:0;
+}
+.bg-heart{
+position:absolute;
+font-size:20px;
+color:rgba(255,77,109,0.2);
+animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+0%{transform:translateY(100vh) scale(.5);opacity:0;}
+50%{opacity:.6;}
+100%{transform:translateY(-10vh) scale(1.2);opacity:0;}
+}
+
+/* Custom Heart Cursor */
+.cursor-heart{
+position:fixed;
+width:22px;
+height:22px;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4d6d' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+background-size:cover;
+pointer-events:none;
+transform:translate(-50%,-50%);
+z-index:1000;
+animation:pulse 1s infinite alternate;
+}
+@keyframes pulse{
+from{transform:translate(-50%,-50%) scale(1);}
+to{transform:translate(-50%,-50%) scale(1.15);}
+}
+
+/* Trail Hearts */
+.trail-heart{
+position:fixed;
+width:14px;
+height:14px;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff8fa3' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+background-size:cover;
+pointer-events:none;
+animation:trailFade .8s ease-out forwards;
+}
+@keyframes trailFade{
+0%{opacity:1;transform:scale(1);}
+100%{opacity:0;transform:scale(.2) translateY(-20px);}
+}
+
+/* Container */
+.container{
+width:90%;
+max-width:420px;
+background:rgba(255,255,255,.75);
+backdrop-filter:blur(12px);
+border-radius:25px;
+padding:35px 25px;
+text-align:center;
+box-shadow:0 15px 35px rgba(255,77,109,.25);
+transform-style:preserve-3d;
+transition:transform .15s ease;
+z-index:2;
+}
+
+h1{
+font-family:'Sacramento',cursive;
+color:var(--primary);
+font-size:2.8rem;
+margin-bottom:10px;
+transform:translateZ(40px);
+}
+
+p{margin-bottom:20px;color:#444;}
+
+.options{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+button{
+padding:14px;
+border:none;
+border-radius:50px;
+font-weight:600;
+background:white;
+color:var(--primary);
+cursor:pointer;
+transition:.3s;
+}
+button:hover{
+background:var(--primary);
+color:white;
+transform:scale(1.05);
+}
+
+.progress{margin-bottom:15px;font-size:.9rem;color:#777;}
+
+.quote-box{
+margin-top:20px;
+padding:15px;
+background:rgba(255,255,255,.85);
+border-radius:12px;
+font-style:italic;
+}
+.movie{
+margin-top:8px;
+font-size:.85rem;
+font-weight:600;
+color:var(--primary);
+}
+
+.result{display:none;}
+
+/* Click Burst */
+.click-heart{
+position:fixed;
+width:20px;height:20px;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff4d6d' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+background-size:cover;
+pointer-events:none;
+animation:burst .8s ease forwards;
+}
+@keyframes burst{
+0%{transform:translate(0,0) scale(.5);opacity:1;}
+100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-hearts" id="bgHearts"></div>
+<div class="cursor-heart" id="cursorHeart"></div>
+
+<div class="container" id="card">
+<div id="quiz">
+<div class="progress" id="progress"></div>
+<h1 id="header">Hey You!</h1>
+<p id="question">Ready for something special?</p>
+<div class="options" id="options">
+<button onclick="startQuiz()">Start ❤️</button>
+</div>
+</div>
+
+<div id="result" class="result">
+<h1 id="finalTitle"></h1>
+<p>You are officially my favorite person.</p>
+<div class="quote-box">
+<span id="quote"></span>
+<div class="movie" id="movie"></div>
+</div>
+<button onclick="shareCard()">Share ❤️</button>
+<button onclick="location.reload()">Restart</button>
+</div>
+</div>
+
+<script>
+// Floating hearts
+function initHearts(){
+const container=document.getElementById("bgHearts");
+for(let i=0;i<20;i++){
+const h=document.createElement("div");
+h.className="bg-heart";
+h.innerHTML="❤";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(10+Math.random()*10)+"s";
+h.style.animationDelay=Math.random()*10+"s";
+container.appendChild(h);
+}
+}
+initHearts();
+
+// Heart cursor + trail
+const cursor=document.getElementById("cursorHeart");
+let lastMove=0;
+
+document.addEventListener("mousemove",(e)=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+
+const now=Date.now();
+if(now-lastMove>40){
+createTrail(e.clientX,e.clientY);
+lastMove=now;
+}
+
+// 3D tilt
+const x=(window.innerWidth/2 - e.pageX)/30;
+const y=(window.innerHeight/2 - e.pageY)/30;
+document.getElementById("card").style.transform=
+`rotateY(${x}deg) rotateX(${y}deg)`;
+});
+
+function createTrail(x,y){
+const heart=document.createElement("div");
+heart.className="trail-heart";
+document.body.appendChild(heart);
+heart.style.left=x+"px";
+heart.style.top=y+"px";
+setTimeout(()=>heart.remove(),800);
+}
+
+// Click burst
+document.addEventListener("click",(e)=>{
+for(let i=0;i<10;i++){
+const heart=document.createElement("div");
+heart.className="click-heart";
+document.body.appendChild(heart);
+heart.style.left=e.clientX+"px";
+heart.style.top=e.clientY+"px";
+const angle=Math.random()*Math.PI*2;
+const dist=50+Math.random()*100;
+heart.style.setProperty("--tx",Math.cos(angle)*dist+"px");
+heart.style.setProperty("--ty",Math.sin(angle)*dist+"px");
+setTimeout(()=>heart.remove(),800);
+}
+});
+
+// Quiz logic
+function getName(){
+return new URLSearchParams(window.location.search).get("name");
+}
+const valentineName=getName();
+
+const questions=[
+{q:"Who fell first?",o:["You 😏","Me 🙈","Mutual"]},
+{q:"Our genre?",o:["RomCom","Epic","Chaotic"]},
+{q:"What makes us unstoppable?",o:["Chemistry 🔥","Memes","Late talks"]},
+{q:"If love had a sound?",o:["Your laugh","Heartbeat","Silence"]},
+{q:"What scares you more?",o:["Losing me","No WiFi","No snacks"]},
+{q:"Final one… ready?",o:["Yes ❤️","Always ❤️","Obviously ❤️"]}
+];
+
+const quotes=[
+{t:"You had me at hello.",m:"Jerry Maguire (1996)"},
+{t:"To me, you are perfect.",m:"Love Actually (2003)"},
+{t:"I'm also just a girl, standing in front of a boy, asking him to love her.",m:"Notting Hill (1999)"},
+{t:"It would be a privilege to have my heart broken by you.",m:"The Fault in Our Stars (2014)"},
+{t:"You make me want to be a better man.",m:"As Good As It Gets (1997)"}
+];
+
+let current=0;
+let lastQuote=-1;
+
+function startQuiz(){current=0;nextQuestion();}
+
+function nextQuestion(){
+if(current<questions.length){
+const q=questions[current];
+document.getElementById("header").innerText=`Question ${current+1}`;
+document.getElementById("question").innerText="Hmm… interesting 👀";
+document.getElementById("options").innerHTML="";
+document.getElementById("progress").innerText=`${current+1} of ${questions.length}`;
+
+setTimeout(()=>{
+document.getElementById("question").innerText=q.q;
+q.o.forEach(opt=>{
+const btn=document.createElement("button");
+btn.innerText=opt;
+btn.onclick=()=>{current++;nextQuestion();};
+document.getElementById("options").appendChild(btn);
+});
+},600);
+}else showResult();
+}
+
+function showResult(){
+document.getElementById("quiz").style.display="none";
+document.getElementById("result").style.display="block";
+
+let r;
+do{r=Math.floor(Math.random()*quotes.length);}
+while(r===lastQuote);
+lastQuote=r;
+
+const selected=quotes[r];
+const nameText=valentineName?`, ${valentineName}`:"";
+document.getElementById("finalTitle").innerText=
+`Happy Valentine's${nameText}! ❤️`;
+document.getElementById("quote").innerText=`"${selected.t}"`;
+document.getElementById("movie").innerText=`- ${selected.m}`;
+}
+
+function shareCard(){
+const name=valentineName?`?name=${valentineName}`:"";
+const url=window.location.origin+window.location.pathname+name;
+if(navigator.share){
+navigator.share({title:"For You ❤️",text:"I made something special 💌",url:url});
+}else{
+navigator.clipboard.writeText(url);
+alert("Link copied ❤️");
+}
+}
+</script>
+
+</body>
+</html>
