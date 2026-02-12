@@ -268,6 +268,74 @@
                 opacity: 0;
             }
         }
+
+        /* Cinematic Mode (Divya) */
+        body.cinematic {
+            --bg: linear-gradient(135deg, #1a0509, #4a0a18);
+            --primary: #d4af37;
+            /* Gold */
+        }
+
+        body.cinematic .container {
+            background: rgba(30, 10, 15, 0.85);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.25);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #f5f5f5;
+        }
+
+        body.cinematic h1 {
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        body.cinematic p {
+            color: #e0e0e0;
+        }
+
+        body.cinematic .progress-heart {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body.cinematic .progress-heart::before,
+        body.cinematic .progress-heart::after {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body.cinematic .progress-heart.active,
+        body.cinematic .progress-heart.completed {
+            background-color: var(--primary);
+        }
+
+        body.cinematic .progress-heart.active::before,
+        body.cinematic .progress-heart.active::after,
+        body.cinematic .progress-heart.completed::before,
+        body.cinematic .progress-heart.completed::after {
+            background-color: var(--primary);
+        }
+
+        body.cinematic button {
+            background: linear-gradient(45deg, #d4af37, #f3e5ab);
+            color: #2a080d;
+        }
+
+        body.cinematic button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        }
+
+        body.cinematic .quote-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid var(--primary);
+            color: #f5f5f5;
+        }
+
+        body.cinematic .bg-heart {
+            color: rgba(212, 175, 55, 0.1);
+        }
+
+        body.cinematic .movie {
+            color: #ffd700;
+        }
     </style>
 </head>
 
@@ -385,6 +453,10 @@
         }
         const valentineName = getName();
 
+        if (valentineName && valentineName.toLowerCase() === "divya") {
+            document.body.classList.add("cinematic");
+        }
+
         const questions = [
             { q: "Our aesthetic?", o: ["Retro Sunset 🌅", "Midnight Rain 🌧️", "Golden Hour ✨"] },
             { q: "The vibe of our first meeting?", o: ["Slow Motion", "A Blur", "Written in the stars"] },
@@ -402,11 +474,15 @@
             // { t: "I think I'd miss you even if we'd never met.", m: "The Wedding Date (2005)" },
             { t: "Everything I have ever done, I've done for you.", m: "Great Expectations (1998)" },
             // { t: "You are my greatest adventure.", m: "The Incredibles (2004)" },
-            { t: "നമുക്ക് ഗ്രാമങ്ങളിൽ ചെന്നു രാപ്പാർക്കാം; അതികാലത്ത് എഴുന്നേറ്റ് മുന്തിരിത്തോട്ടങ്ങളിൽ പോയി മുന്തിരിവള്ളി തളിർത്തു പൂവിടുകയും മാതളനാരകം പൂക്കുകയും ചെയ്തുവോ എന്ന് നോക്കാം. അവിടെ വെച്ച് ഞാൻ നിനക്ക് എന്റെ പ്രേമം തരും.", m: "Namukku Parkkan Munthirithoppukal (1986)" },
             { t: "നമുക്ക് പ്രണയിക്കാൻ ഒരു നഗരം വേണമെന്നൊന്നുമില്ല... നിന്റെ കണ്ണ് മാത്രം മതി.", m: "Godha (2017)" },
             { t: "ജീവിതത്തിൽ ചില കാര്യങ്ങൾ അങ്ങനെയാണ്... എത്ര വൈകിയാലും അത് നമ്മളെ തേടി എത്തും.", m: "Om Shanti Oshana (2014)" },
             { t: "നീയാണ് എന്റെ ലോകം", m: "Premam (2015)" },
         ];
+
+        const specialQuote = {
+            t: "നമുക്ക് ഗ്രാമങ്ങളിൽ ചെന്നു രാപ്പാർക്കാം; അതികാലത്ത് എഴുന്നേറ്റ് മുന്തിരിത്തോട്ടങ്ങളിൽ പോയി മുന്തിരിവള്ളി തളിർത്തു പൂവിടുകയും മാതളനാരകം പൂക്കുകയും ചെയ്തുവോ എന്ന് നോക്കാം. അവിടെ വെച്ച് ഞാൻ നിനക്ക് എന്റെ പ്രേമം തരും.",
+            m: "Namukku Parkkan Munthirithoppukal (1986)"
+        };
 
         let current = 0;
         let lastQuote = -1;
@@ -460,12 +536,21 @@
             document.getElementById("quiz").style.display = "none";
             document.getElementById("result").style.display = "block";
 
-            let r;
-            do { r = Math.floor(Math.random() * quotes.length); }
-            while (r === lastQuote);
-            lastQuote = r;
+            let selected;
+            const isDivya = valentineName && valentineName.toLowerCase() === "divya";
+            const hasSeenSpecial = localStorage.getItem("divyaSpecialShown");
 
-            const selected = quotes[r];
+            if (isDivya && !hasSeenSpecial) {
+                selected = specialQuote;
+                localStorage.setItem("divyaSpecialShown", "true");
+            } else {
+                let r;
+                do { r = Math.floor(Math.random() * quotes.length); }
+                while (r === lastQuote && quotes.length > 1);
+                lastQuote = r;
+                selected = quotes[r];
+            }
+
             const nameText = valentineName ? `, ${valentineName}` : "";
             document.getElementById("finalTitle").innerText =
                 `Happy Valentine's${nameText}! ❤️`;

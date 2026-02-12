@@ -21,7 +21,7 @@ You can share this special card with your Valentine using the link below! Just a
 `https://valentine-mylove.netlify.app/YOUR_VALENTINE_NAME`
 
 **Example:**
-[https://valentine-mylove.netlify.app/anu](https://valentine-mylove.netlify.app/anu)
+[https://valentine-mylove.netlify.app/YOUR_VALENTINE_NAME](https://valentine-mylove.netlify.app/YOUR_VALENTINE_NAME)
 
 ## 🛠️ Customization
 
